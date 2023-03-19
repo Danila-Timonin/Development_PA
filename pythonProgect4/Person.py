@@ -64,14 +64,17 @@ class Record_list:
         columns = ['Number', 'Date', 'Time', 'State', 'Gender']
         data = input('Введите дату в формате год.месяц.день\n')
         time = input('Введите часы.минуты\n')
+        state = bool(input('Если сотрудник зашел введите 1, если вышел нажмите Enter\n'))
+        gender = input('Введиде "M" для мужского пола, "W" для женского\n')
         with open("users.csv", "a", newline="") as file:
             writer = csv.DictWriter(file, fieldnames=columns)
             writer.writerow({'Number': str(len(self.records) + 1),
                              'Date': data,
                              'Time': time,
-                             'State': bool(input('Если сотрудник зашел введите 1, если вышел нажмите Enter\n')),
-                             'Gender': input('Введиде "M" для мужского пола, "W" для женского\n')})
-        self.read_file()
+                             'State': state,
+                             'Gender': gender})
+        self.records.append(Record(str(len(self.records) + 1), data, time, state,
+                                   gender))
 
     def __str__(self):
         str_ = ""
